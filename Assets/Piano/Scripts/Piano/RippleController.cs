@@ -16,13 +16,11 @@ public class RippleController : MonoBehaviour
     private IEnumerator converge;
     private IEnumerator diverge;
 
-    private void Start()
+    private void OnEnable()
     {
         RippleConvergence.Pause();
         RippleDivergence.Pause();
-    }
-    private void OnEnable()
-    {
+
         Invoke("RippleConverge", 0f);
     }
 

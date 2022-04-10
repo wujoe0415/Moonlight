@@ -8,7 +8,7 @@ public class PlayMoonlight : MonoBehaviour
     [Header("Trigger Settings")]
     public KeyCode CorrespondingKey;
     public bool isPressed = false;
-    public List<PressKeys> Presskeys = new List<PressKeys>();
+    //public List<PressKeys> Presskeys = new List<PressKeys>();
     [Range(0f, 30f)]
     public float DisableAfterPressing;
 
@@ -20,6 +20,7 @@ public class PlayMoonlight : MonoBehaviour
     
     private bool hasPressed = false;
     private AudioSource _moonlightFraction;
+    private List<PressKeys> _presskeys = new List<PressKeys>();
 
     private void OnEnable()
     {
@@ -31,7 +32,7 @@ public class PlayMoonlight : MonoBehaviour
         if (Input.GetKeyDown(CorrespondingKey) && !hasPressed)
         {
             isPressed = true;
-            foreach(PressKeys presskey in Presskeys)
+            foreach(PressKeys presskey in _presskeys)
             {
                 presskey.PressKey();
             }
@@ -39,7 +40,7 @@ public class PlayMoonlight : MonoBehaviour
         }
         if (Input.GetKeyUp(CorrespondingKey) && !hasPressed)
         {
-            foreach (PressKeys presskey in Presskeys)
+            foreach (PressKeys presskey in _presskeys)
             {
                 presskey.ReleaseKey();
             }
@@ -52,5 +53,11 @@ public class PlayMoonlight : MonoBehaviour
     private void Disable()
     {
         this.gameObject.SetActive(false);
+    }
+
+    public void SetPresskeys(List<GameObject> presskeys)
+    {
+        foreach (GameObject presskey in presskeys)
+            _presskeys.Add(presskey.GetComponent<PressKeys>());
     }
 }

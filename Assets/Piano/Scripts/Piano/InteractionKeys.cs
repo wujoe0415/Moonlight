@@ -43,14 +43,17 @@ public class InteractionKeys : MonoBehaviour
 
             for (int i = 0; i < Keys.Count; i++)
             {
+                List<GameObject> key = new List<GameObject>();
                 foreach (RippleKey rippleKey in Keys[i].RippleKeys)
                 {
                     GenerateRippleSystem.AssignRippleSystem(rippleKey.Key.transform, rippleKey.InitPos);
                     rippleKey.Key.GetComponent<ChangeMaterial>().ChangeToTarget();
+                    key.Add(rippleKey.Key);
                 }
                 Keys[i].InteractableArea.SetActive(true);
                 currentKey = Keys[i].InteractableArea.GetComponent<PlayMoonlight>();
 
+                currentKey.SetPresskeys(key);
                 while (!currentKey.isPressed)
                     yield return null;
 
